@@ -1,15 +1,16 @@
 const Pessoa = require('./pessoa')
 
 class Cliente extends Pessoa {
+    #id
     #senha
     constructor(nome, dataNasc, cpf, email, id, senha) {
         super(nome, dataNasc, cpf, email)
-        this.id = id
+        this.#id = id
         this.#senha = senha
     }
 
-    get senha() {
-        return this.#senha
+    get id() { 
+        return this.#id 
     }
 
     set senha(senha) {
@@ -18,7 +19,7 @@ class Cliente extends Pessoa {
 
     imprimirDados() {
         super.imprimirDados()
-        console.log(`ID: ${this.id})\nSenha: ${this.#senha}`)
+        console.log(`ID: ${this.#id})\nSenha: ${this.#senha}`)
     }
 
     montarCarrinho() {}
