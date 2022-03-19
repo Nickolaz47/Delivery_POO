@@ -2,20 +2,18 @@ const Pessoa = require('./pessoa')
 
 class Pedido {
     static counter = 1
-    constructor(loja, cliente, produto, precoProduto, quantidade) {
+    constructor(idLoja, idCliente, produto, precoProduto, quantidade) {
         this.id = Pedido.counter
-        this.loja = loja
-        this.cliente = cliente
+        this.idLoja = idLoja
+        this.idCliente = idCliente
         this.produto = produto
         this.precoProduto = precoProduto
-        this.precoFinal = calcPrecoFinal()
         this.quantidade = quantidade
-        this.entregador = ''
+        this.precoFinal = this.precoProduto * this.quantidade
+        this.pedidoRealizado = false
+        this.pedidoConfirmado = false
+        this.entregador = undefined        
         Pedido.counter += 1
-    }
-
-    calcPrecoFinal() {
-        return this.precoProduto * this.quantidade
     }
 }
 
@@ -52,5 +50,20 @@ class Cliente extends Pessoa {
         pedido.quantidade = quantidade
     }
 
-    realizarPedido() {}
+    realizarPedido() {
+        this.pedidosRealizados = this.carrinho.map(objeto => {
+            objeto.pedidoRealizado = true
+            return objeto            
+        })
+        this.carrinho = []
+    }
 }
+
+// Testes
+const cliente = new Cliente('João', '2000-12-09', '12345678900', 'jao@mail.com', '123456')
+const pedido = new Pedido(1, 1, 'big mac', 8, 2)
+// console.log(pedido)
+cliente.addItem(pedido)
+console.log(cliente)
+cliente.realizarPedido()
+console.log(cliente)
