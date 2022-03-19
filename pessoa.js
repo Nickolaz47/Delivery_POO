@@ -1,13 +1,21 @@
 class Pessoa {
+    #id
     #nome
     #dataNasc    
     #cpf
     #email
+    static counter = 1
     constructor(nome, dataNasc, cpf, email) {
+        this.#id = Pessoa.counter
         this.#nome = nome
         this.#dataNasc = dataNasc
         this.#cpf = cpf
         this.#email = email
+        Pessoa.counter += 1
+    }
+
+    get id() { 
+        return this.#id
     }
 
     get nome() { 
@@ -43,7 +51,7 @@ class Pessoa {
     }
 
     imprimirDados() {
-        console.log(`Nome: ${this.#nome}\nDataNasc: ${this.#dataNasc}\nCPF: ${this.#cpf}\nEmail: ${this.#email}`)
+        console.log(`ID: ${this.#id}\nNome: ${this.#nome}\nDataNasc: ${this.#dataNasc}\nCPF: ${this.#cpf}\nEmail: ${this.#email}`)
     }
 
 }

@@ -1,8 +1,9 @@
 const Pessoa = require('./pessoa')
 
 class Pedido {
-    constructor(id, loja, cliente, produto, precoProduto, quantidade) {
-        this.id = id
+    static counter = 1
+    constructor(loja, cliente, produto, precoProduto, quantidade) {
+        this.id = Pedido.counter
         this.loja = loja
         this.cliente = cliente
         this.produto = produto
@@ -10,6 +11,7 @@ class Pedido {
         this.precoFinal = calcPrecoFinal()
         this.quantidade = quantidade
         this.entregador = ''
+        Pedido.counter += 1
     }
 
     calcPrecoFinal() {
@@ -18,17 +20,11 @@ class Pedido {
 }
 
 class Cliente extends Pessoa {
-    #id
     #senha
-    constructor(nome, dataNasc, cpf, email, id, senha) {
-        super(nome, dataNasc, cpf, email)
-        this.#id = id
+    constructor(nome, dataNasc, cpf, email, senha) {
+        super(nome, dataNasc, cpf, email)        
         this.#senha = senha
         this.carrinho = []
-    }
-
-    get id() { 
-        return this.#id 
     }
 
     set senha(senha) {
@@ -37,7 +33,7 @@ class Cliente extends Pessoa {
 
     imprimirDados() {
         super.imprimirDados()
-        console.log(`ID: ${this.#id}\nSenha: ${this.#senha}`)
+        console.log(`Senha: ${this.#senha}`)
     }
 
     cancelarCarrinho() {
