@@ -43,7 +43,26 @@ class Cliente extends Pessoa {
     }
 
     removerItem(pedido) {
-        this.carrinho.splice(this.carrinho.indexOf(pedido), 1)
+        if (pedido instanceof Pedido) {
+            if (this.carrinho.includes(pedido)) {
+                this.carrinho.splice(this.carrinho.indexOf(pedido), 1)
+                console.log('Pedido removido.')
+            } else {
+                console.log('Pedido não existe!')
+            }
+        } else {
+            let removed = false
+            this.carrinho.forEach((objeto) => {
+                if (objeto.id === pedido) {
+                    this.carrinho.splice(this.carrinho.indexOf(pedido), 1)
+                    removed = true
+                    console.log('Pedido removido.')
+                }
+            })
+            if (removed === false) {
+                console.log('Pedido não existe!')
+            }
+        }
     }
 
     alterarQuantItem(pedido, quantidade) {
