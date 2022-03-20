@@ -65,8 +65,12 @@ class Cliente extends Pessoa {
         }
     }
 
-    alterarQuantItem(pedido, quantidade) {
-        pedido.quantidade = quantidade
+    alterarQuantItem(idPedido, quantidade) {
+        this.carrinho.forEach((objeto) => {
+            if (idPedido === objeto.id) {
+                objeto.quantidade = quantidade
+            }    
+        })
     }
 
     realizarPedido() {
@@ -85,4 +89,5 @@ const pedido = new Pedido(1, 1, 'big mac', 8, 2)
 cliente.addItem(pedido)
 console.log(cliente)
 cliente.realizarPedido()
+cliente.alterarQuantItem(1, 4)
 console.log(cliente)
