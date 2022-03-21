@@ -20,6 +20,7 @@ class Pedido {
 
 class Cliente extends Pessoa {
     #senha
+    #checarArray
     constructor(nome, dataNasc, cpf, email, senha) {
         super(nome, dataNasc, cpf, email)        
         this.#senha = senha
@@ -35,6 +36,23 @@ class Cliente extends Pessoa {
         console.log(`Senha: ${this.#senha}`)
     }
 
+    #getIndexPedido(pedido, array) {
+        if (pedido instanceof Pedido) {
+            if (this.carrinho.includes(pedido)) {
+                return array.indexOf(pedido)
+            } else {
+                return false
+            }
+        } else if (Number.isInteger(pedido)) {
+            array.forEach((objeto) => {
+                if (objeto.id === pedido) {
+                    return array.indexOf(objeto)
+                }
+            })
+        }
+        return false 
+    }
+
     cancelarCarrinho() {
         this.carrinho = []
     }
@@ -44,50 +62,24 @@ class Cliente extends Pessoa {
     }
 
     removerItem(pedido) {
-        if (pedido instanceof Pedido) {
-            if (this.carrinho.includes(pedido)) {
-                this.carrinho.splice(this.carrinho.indexOf(pedido), 1)
-                console.log('Pedido removido.')
-            } else {
-                console.log('Pedido não existe!')
-            }
+        let indexPedido = getIndexPedido(pedido, this.carrinho)
+        if (indexPedido !== false) {
+            this.pedidosRealizados.splice(this.carrinho.indexOf(pedido), 1)
+            console.log('Pedido removido.')            
         } else {
-            let removed = false
-            this.carrinho.forEach((objeto) => {
-                if (objeto.id === pedido) {
-                    this.carrinho.splice(this.carrinho.indexOf(pedido), 1)
-                    removed = true
-                    console.log('Pedido removido.')
-                }
-            })
-            if (removed === false) {
-                console.log('Pedido não existe!')
-            }
+            console.log('Pedido não encontrado!')
         }
     }
 
     alterarQuantItem(pedido, quantidade) {
-        if (pedido instanceof Pedido) {
-            if (this.carrinho.includes(pedido)) {
-                pedido.quantidade = quantidade
-                pedido.precoFinal = pedido.precoProduto * pedido.quantidade
-                console.log('Quantidade alterada.')
-            } else {
-                console.log('Pedido não encontrado.')
-            }
+        let indexPedido = getIndexPedido(pedido, this.carrinho)
+        if (indexPedido !== false) {
+            let objeto = this.carrinho[indexPedido]
+            objeto.quantidade = quantidade
+            objeto.precoFinal = objeto.precoProduto * objeto.quantidade
+            console.log('Quantidade alterada.')
         } else {
-            let modified = false
-            this.carrinho.forEach((objeto) => {
-                if (objeto.id === pedido) {
-                    objeto.quantidade = quantidade
-                    objeto.precoFinal = objeto.precoProduto * objeto.quantidade
-                    modified = true
-                    console.log('Quantidade alterada.')
-                }
-            })
-            if (modified === false) {
-                console.log('Pedido não encontrado!')
-            }            
+            console.log('Pedido não encontrado!')
         }
     }
 
@@ -99,59 +91,29 @@ class Cliente extends Pessoa {
         this.carrinho = []
     }
 
+
     cancelarPedido(pedido) {
-        if (pedido instanceof Pedido && this.pedidosRealizados !== undefined) {
-            if (this.pedidosRealizados.includes(pedido)) {
-                if (pedido.entregador === undefined) {
-                    this.pedidosRealizados.splice(this.pedidosRealizados.indexOf(pedido), 1)
-                    console.log('Pedido cancelado.')
-                } else {
-                    console.log('Pedido não pode ser cancelado pois há um entregador associado.')
-                }
+        let indexPedido = getIndexPedido(pedido, this.pedidosRealizados)
+        if (indexPedido !== false) {
+            if (this.entregador !== undefined) {
+                this.pedidosRealizados.splice(this.pedidosRealizados.indexOf(pedido), 1)
+                console.log('Pedido cancelado.')
             } else {
-                console.log('Pedido não encontrado.')
+                console.log('Pedido não pode ser cancelado pois há um entregador associado.')
             }
-        } else if (Number.isSafeInteger(pedido) && this.pedidosRealizados !== undefined) {
-            let canceled = false
-            this.carrinho.forEach((objeto) => {
-                if (objeto.id === pedido) {
-                    if (objeto.entregador === undefined) {
-                        this.pedidosRealizados.splice(this.pedidosRealizados.indexOf(objeto), 1)
-                        console.log('Pedido cancelado.')
-                        canceled = true
-                    } else {
-                        console.log('Pedido não pode ser cancelado pois há um entregador associado.')
-                    }
-                }
-            })
-            if (canceled === false) {
-                console.log('Pedido não encontrado!')
-            }            
         } else {
-            console.log('Pedido não encontrado/Nenhum pedido foi realizado.')
+            console.log('Pedido não encontrado!')
         }
     }
 
     finalizarPedido(pedido) {
-        if (pedido instanceof Pedido) {
-            if (this.pedidosRealizados.includes(pedido)) {
-                pedido.pedidoFinalizado = true                
-                console.log('Pedido finalizado.')
-            } else {
-                console.log('Pedido não encontrado.')
-            }
+        let indexPedido = getIndexPedido(pedido, this.pedidosRealizados)
+        if (indexPedido !== false) {
+            let objeto = this.pedidosRealizados[indexPedido]
+            objeto.pedidoFinalizado = true
+            console.log('Pedido finalizado.')
         } else {
-            let finished = false
-            this.carrinho.forEach((objeto) => {
-                if (objeto.id === pedido) {
-                    pedido.pedidoFinalizado = true
-                    finished = true
-                    console.log('Pedido finalizado.')
-                }
-            })
-            if (finished === false) {
-                console.log('Pedido não encontrado!')
-            }            
+            console.log('Pedido não encontrado!')
         }
     }
 }
