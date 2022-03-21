@@ -20,7 +20,6 @@ class Pedido {
 
 class Cliente extends Pessoa {
     #senha
-    #checarArray
     constructor(nome, dataNasc, cpf, email, senha) {
         super(nome, dataNasc, cpf, email)        
         this.#senha = senha
@@ -36,21 +35,24 @@ class Cliente extends Pessoa {
         console.log(`Senha: ${this.#senha}`)
     }
 
-    #getIndexPedido(pedido, array) {
+    getIndexPedido(pedido, array) {   
         if (pedido instanceof Pedido) {
-            if (this.carrinho.includes(pedido)) {
+            if (array.includes(pedido)) {
                 return array.indexOf(pedido)
             } else {
                 return false
             }
-        } else if (Number.isInteger(pedido)) {
-            array.forEach((objeto) => {
-                if (objeto.id === pedido) {
-                    return array.indexOf(objeto)
-                }
-            })
+        } else {
+            if (Number.isSafeInteger(Number.parseInt(pedido))) {
+                return array.map(objeto => {
+                    if (objeto.id === pedido) {                        
+                       return array.indexOf(objeto)
+                    }              
+                })[0]
+            } else {                
+                return false 
+            }
         }
-        return false 
     }
 
     cancelarCarrinho() {
@@ -62,9 +64,9 @@ class Cliente extends Pessoa {
     }
 
     removerItem(pedido) {
-        let indexPedido = getIndexPedido(pedido, this.carrinho)
-        if (indexPedido !== false) {
-            this.pedidosRealizados.splice(this.carrinho.indexOf(pedido), 1)
+        let indexPedido = this.getIndexPedido(pedido, this.carrinho)                
+        if (Number.isSafeInteger(indexPedido)) {
+            this.carrinho.splice(this.carrinho.indexOf(pedido), 1)
             console.log('Pedido removido.')            
         } else {
             console.log('Pedido não encontrado!')
@@ -72,8 +74,8 @@ class Cliente extends Pessoa {
     }
 
     alterarQuantItem(pedido, quantidade) {
-        let indexPedido = getIndexPedido(pedido, this.carrinho)
-        if (indexPedido !== false) {
+        let indexPedido = this.getIndexPedido(pedido, this.carrinho)
+        if (Number.isSafeInteger(indexPedido)) {
             let objeto = this.carrinho[indexPedido]
             objeto.quantidade = quantidade
             objeto.precoFinal = objeto.precoProduto * objeto.quantidade
@@ -91,11 +93,10 @@ class Cliente extends Pessoa {
         this.carrinho = []
     }
 
-
     cancelarPedido(pedido) {
-        let indexPedido = getIndexPedido(pedido, this.pedidosRealizados)
-        if (indexPedido !== false) {
-            if (this.entregador !== undefined) {
+        let indexPedido = this.getIndexPedido(pedido, this.pedidosRealizados)        
+        if (Number.isSafeInteger(indexPedido)) {
+            if (this.entregador === undefined) {
                 this.pedidosRealizados.splice(this.pedidosRealizados.indexOf(pedido), 1)
                 console.log('Pedido cancelado.')
             } else {
@@ -107,8 +108,8 @@ class Cliente extends Pessoa {
     }
 
     finalizarPedido(pedido) {
-        let indexPedido = getIndexPedido(pedido, this.pedidosRealizados)
-        if (indexPedido !== false) {
+        let indexPedido = this.getIndexPedido(pedido, this.pedidosRealizados)        
+        if (Number.isSafeInteger(indexPedido)) {
             let objeto = this.pedidosRealizados[indexPedido]
             objeto.pedidoFinalizado = true
             console.log('Pedido finalizado.')
@@ -121,11 +122,7 @@ class Cliente extends Pessoa {
 // Testes
 const cliente = new Cliente('João', '2000-12-09', '12345678900', 'jao@mail.com', '123456')
 const pedido = new Pedido(1, 1, 'big mac', 8, 2)
-// console.log(pedido)
 cliente.addItem(pedido)
-console.log(cliente)
-cliente.alterarQuantItem(1, 4)
-console.log(cliente)
 cliente.realizarPedido()
-cliente.cancelarPedido(pedido)
+cliente.finalizarPedido(1)
 console.log(cliente)
