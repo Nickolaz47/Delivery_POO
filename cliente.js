@@ -65,12 +65,29 @@ class Cliente extends Pessoa {
         }
     }
 
-    alterarQuantItem(idPedido, quantidade) {
-        this.carrinho.forEach((objeto) => {
-            if (idPedido === objeto.id) {
-                objeto.quantidade = quantidade
-            }    
-        })
+    alterarQuantItem(pedido, quantidade) {
+        if (pedido instanceof Pedido) {
+            if (this.carrinho.includes(pedido)) {
+                pedido.quantidade = quantidade
+                pedido.precoFinal = pedido.precoProduto * pedido.quantidade
+                console.log('Quantidade alterada.')
+            } else {
+                console.log('Pedido não encontrado.')
+            }
+        } else {
+            let modified = false
+            this.carrinho.forEach((objeto) => {
+                if (objeto.id === pedido) {
+                    objeto.quantidade = quantidade
+                    objeto.precoFinal = objeto.precoProduto * objeto.quantidade
+                    modified = true
+                    console.log('Quantidade alterada.')
+                }
+            })
+            if (modified === false) {
+                console.log('Pedido não encontrado!')
+            }            
+        }
     }
 
     realizarPedido() {
@@ -88,6 +105,6 @@ const pedido = new Pedido(1, 1, 'big mac', 8, 2)
 // console.log(pedido)
 cliente.addItem(pedido)
 console.log(cliente)
-cliente.realizarPedido()
+// cliente.realizarPedido()
 cliente.alterarQuantItem(1, 4)
 console.log(cliente)
