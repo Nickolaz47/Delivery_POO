@@ -12,7 +12,8 @@ class Pedido {
         this.precoFinal = this.precoProduto * this.quantidade
         this.pedidoRealizado = false
         this.pedidoConfirmado = false
-        this.entregador = undefined        
+        this.entregador = undefined
+        this.pedidoFinalizado = false        
         Pedido.counter += 1
     }
 }
@@ -97,6 +98,62 @@ class Cliente extends Pessoa {
         })
         this.carrinho = []
     }
+
+    cancelarPedido(pedido) {
+        if (pedido instanceof Pedido && this.pedidosRealizados !== undefined) {
+            if (this.pedidosRealizados.includes(pedido)) {
+                if (pedido.entregador === undefined) {
+                    this.pedidosRealizados.splice(this.pedidosRealizados.indexOf(pedido), 1)
+                    console.log('Pedido cancelado.')
+                } else {
+                    console.log('Pedido não pode ser cancelado pois há um entregador associado.')
+                }
+            } else {
+                console.log('Pedido não encontrado.')
+            }
+        } else if (Number.isSafeInteger(pedido) && this.pedidosRealizados !== undefined) {
+            let canceled = false
+            this.carrinho.forEach((objeto) => {
+                if (objeto.id === pedido) {
+                    if (objeto.entregador === undefined) {
+                        this.pedidosRealizados.splice(this.pedidosRealizados.indexOf(objeto), 1)
+                        console.log('Pedido cancelado.')
+                        canceled = true
+                    } else {
+                        console.log('Pedido não pode ser cancelado pois há um entregador associado.')
+                    }
+                }
+            })
+            if (canceled === false) {
+                console.log('Pedido não encontrado!')
+            }            
+        } else {
+            console.log('Pedido não encontrado/Nenhum pedido foi realizado.')
+        }
+    }
+
+    finalizarPedido(pedido) {
+        if (pedido instanceof Pedido) {
+            if (this.pedidosRealizados.includes(pedido)) {
+                pedido.pedidoFinalizado = true                
+                console.log('Pedido finalizado.')
+            } else {
+                console.log('Pedido não encontrado.')
+            }
+        } else {
+            let finished = false
+            this.carrinho.forEach((objeto) => {
+                if (objeto.id === pedido) {
+                    pedido.pedidoFinalizado = true
+                    finished = true
+                    console.log('Pedido finalizado.')
+                }
+            })
+            if (finished === false) {
+                console.log('Pedido não encontrado!')
+            }            
+        }
+    }
 }
 
 // Testes
@@ -105,6 +162,8 @@ const pedido = new Pedido(1, 1, 'big mac', 8, 2)
 // console.log(pedido)
 cliente.addItem(pedido)
 console.log(cliente)
-// cliente.realizarPedido()
 cliente.alterarQuantItem(1, 4)
+console.log(cliente)
+cliente.realizarPedido()
+cliente.cancelarPedido(pedido)
 console.log(cliente)
