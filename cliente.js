@@ -119,6 +119,12 @@ class Cliente extends Pessoa {
     }
 }
 
+// module.exports = Cliente
+// module.exports = Pedido
+
+module.exports = Cliente  
+module.exports = Pedido
+
 // Testes
 const cliente = new Cliente('João', '2000-12-09', '12345678900', 'jao@mail.com', '123456')
 const pedido = new Pedido(1, 1, 'big mac', 8, 2)
