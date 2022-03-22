@@ -46,7 +46,7 @@ class Cliente extends Pessoa {
             if (Number.isSafeInteger(Number.parseInt(pedido))) {
                 return array.map(objeto => {
                     if (objeto.id === pedido) {                        
-                       return array.indexOf(objeto)
+                        return array.indexOf(objeto)
                     }              
                 })[0]
             } else {                
