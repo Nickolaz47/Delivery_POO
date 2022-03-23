@@ -77,7 +77,7 @@ class Cliente extends Pessoa {
         this.carrinho = []
     }
 
-    cancelarPedido(pedido) {
+    static cancelarPedido(pedido) {
         let indexPedido = this.getIndexPedido(pedido, this.pedidosRealizados)        
         if (Number.isSafeInteger(indexPedido)) {
             if (this.entregador === undefined) {
@@ -106,9 +106,9 @@ class Cliente extends Pessoa {
 module.exports = Cliente  
 
 // Testes
-const cliente = new Cliente('João', '2000-12-09', '12345678900', 'jao@mail.com', '123456')
-const pedido = new Pedido(1, 1, 'big mac', 8, 2)
-cliente.addItem(pedido)
-cliente.realizarPedido()
-cliente.finalizarPedido(1)
-console.log(cliente)
+// const cliente = new Cliente('João', '2000-12-09', '12345678900', 'jao@mail.com', '123456')
+// const pedido = new Pedido(1, 1, 'big mac', 8, 2)
+// cliente.addItem(pedido)
+// cliente.realizarPedido()
+// cliente.finalizarPedido(1)
+// console.log(cliente)
