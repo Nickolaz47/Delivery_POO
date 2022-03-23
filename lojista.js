@@ -6,7 +6,8 @@ const Pessoa = require('./pessoa');
 const Cliente = require('./cliente');
 const Pedido = require('./pedido');
 const ItensCardapio = require('./itensCardapio');
-const PedidoInformado = require('./index')
+const PedidoInformado = require('./index');
+const pedido = require('./index');
 
 //const Cliente = importCliente.Cliente;
 //const Pedido = importCliente.Pedido;
@@ -43,8 +44,13 @@ class Lojista extends Pessoa {
         this.cardapio[this.cardapio.indexOf(itemAlterado)] = new ItensCardapio(novoProduto,novoPreco)
     }
     cancelarPedidoEmAndamento(idPedido) {
-        Cliente.cancelarPedido(idPedido)
-        // const buscaPedido = 
+        if(pedido.idLoja === this.idLoja) {
+            Cliente.cancelarPedido(idPedido)
+            console.log("Pedido cancelado com sucesso")
+        }else {
+            console.log("Pedido não associado")
+        }
+        
         // console.log("Teste de cancelamento")
         // console.log(Pedido.idLoja)
         // if(Pedido.idLoja === this.idLoja) {
@@ -52,6 +58,14 @@ class Lojista extends Pessoa {
         //         Pedido.pedidoFinalizado === false
         //     }
         // }
+    }
+
+    confirmarPedido(idPedido) {
+        if(pedido.idLoja === this.idLoja) {
+            if(pedido.id === idPedido) {
+                pedido.pedidoConfirmado = true
+            }
+        } 
     }
     atualizaCardapio(){ //Atualizar aqui <---------------------
         jsonStr = ""
@@ -91,4 +105,5 @@ module.exports = Lojista
 // }
 
 
-
+console.log(pedido)
+console.log(pedido.idLoja)
