@@ -47,15 +47,15 @@ class Cliente extends Pessoa {
         if (lojista.cardapio === undefined || lojista.cardapio === []) {
             console.log('Cardápio da loja está indisponível.')
         } else {
-            const produto = lojista.cardapio.map(item => {
-                if (item.idProdCardapio === idProduto) {
-                    return item               
-                }
-            })[0]
-            const pedido = new Pedido(lojista.idLoja, this.id, produto.produto, 
-                                      produto.precoProduto, quantidade)
-            this.carrinho.push(pedido)
-            console.log('Pedido adicionado.')    
+            const produto = lojista.cardapio.find(item => item.idProdCardapio === idProduto)
+            if (produto !== undefined) {
+                const pedido = new Pedido(lojista.idLoja, this.id, produto.produto, 
+                    produto.precoProduto, quantidade)
+                    this.carrinho.push(pedido)
+                    console.log('Pedido adicionado.')  
+            } else {
+                console.log('Produto não encontrado.')    
+            }              
         }
         
     }
