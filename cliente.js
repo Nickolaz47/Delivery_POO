@@ -1,22 +1,6 @@
 const Pessoa = require('./pessoa')
+const Pedido = require('./pedido')
 
-class Pedido {
-    static counter = 1
-    constructor(idLoja, idCliente, produto, precoProduto, quantidade) {
-        this.id = Pedido.counter
-        this.idLoja = idLoja
-        this.idCliente = idCliente
-        this.produto = produto
-        this.precoProduto = precoProduto
-        this.quantidade = quantidade
-        this.precoFinal = this.precoProduto * this.quantidade
-        this.pedidoRealizado = false
-        this.pedidoConfirmado = false
-        this.entregador = undefined
-        this.pedidoFinalizado = false        
-        Pedido.counter += 1
-    }
-}
 
 class Cliente extends Pessoa {
     #senha
@@ -119,11 +103,7 @@ class Cliente extends Pessoa {
     }
 }
 
-// module.exports = Cliente
-// module.exports = Pedido
-
 module.exports = Cliente  
-module.exports = Pedido
 
 // Testes
 const cliente = new Cliente('João', '2000-12-09', '12345678900', 'jao@mail.com', '123456')

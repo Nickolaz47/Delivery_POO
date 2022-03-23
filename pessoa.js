@@ -5,7 +5,7 @@ class Pessoa {
     #cpf
     #email
     static counter = 1
-    constructor(nome, dataNasc, cpf, email) {
+    constructor(nome, dataNasc, cpf, email){
         this.#id = Pessoa.counter
         this.#nome = nome
         this.#dataNasc = dataNasc

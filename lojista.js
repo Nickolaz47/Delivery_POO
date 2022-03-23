@@ -2,19 +2,15 @@
 // Poderá, também, cancelar um pedido que esteja em andamento, ao qual esteja associado;
 // Ao finalizar um pedido, o lojista terá a sua lista de pedidos atualizada com este
 
-const Pessoa = require('./pessoa')
-const importCliente = require('./cliente')
-const Cliente = importCliente.Cliente 
-const Pedido = importCliente.Pedido
+const Pessoa = require('./pessoa');
+const Cliente = require('./cliente');
+const Pedido = require('./pedido');
+const ItensCardapio = require('./itensCardapio');
 
-class ItensCardapio {
-    static idProdCardapio = 0
-    constructor(produto,precoProduto) {
-        this.idProdCardapio = ++ItensCardapio.idProdCardapio
-        this.produto = produto
-        this.precoProduto = precoProduto
-    }
-}
+//const Cliente = importCliente.Cliente;
+//const Pedido = importCliente.Pedido;
+
+
 
 class Lojista extends Pessoa {
     #senha
@@ -50,18 +46,27 @@ class Lojista extends Pessoa {
         Poderá, também, cancelar um pedido que esteja em andamento, ao qual esteja associado
         */
        // Caso o pedido tenha sido realizado, mas não finalizado
+        console.log("Teste de cancelamento")
+        console.log(Pedido.idLoja)
         if(Pedido.idLoja === this.idLoja) {
             if(Pedido.pedidoRealizado === true && Pedido.pedidoFinalizado === true) {
                 Pedido.pedidoFinalizado === false
             }
         }
     }
-
+    atualizaCardapio(){ //Atualizar aqui <---------------------
+        jsonStr = ""
+        //export
+        jsonStr = JSON.stringify(spread.toJSON());
+        //import
+        spread.fromJSON(JSON.parse(jsonStr));
+            }
 }
+module.exports = Lojista
 
 // Testes
-const lojista = new Lojista("João","2003-02-13","12345678910","joaozinho@gmail.com",1,"1234")
-const cliente = new Cliente('João', '2000-12-09', '12345678900', 'jao@mail.com', '123456')
+const lojista = new Lojista("João","2003-02-13","12345678910","joaozinho@gmail.com",1,"1234");
+const cliente = new Cliente('João', '2000-12-09', '12345678900', 'jao@mail.com', '123456');
 const pedido = new Pedido(1, 1, 'big mac', 8, 2)
 
 const item1 = new ItensCardapio("Pão",10)
@@ -72,6 +77,7 @@ lojista.removerItemCardapio(item2)
 lojista.cancelarPedidoEmAndamento()
 
 console.log(lojista)
+//console.log(cliente)
 
 
 // class Cardapio extends Pedido {
