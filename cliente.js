@@ -43,8 +43,21 @@ class Cliente extends Pessoa {
         this.carrinho = []
     }
 
-    addItem(pedido) {
-        this.carrinho.push(pedido)
+    addItem(lojista, idProduto, quantidade) {
+        if (lojista.cardapio === undefined || lojista.cardapio === []) {
+            console.log('Cardápio da loja está indisponível.')
+        } else {
+            const produto = lojista.cardapio.map(item => {
+                if (item.idProdCardapio === idProduto) {
+                    return item.produto                
+                }
+            })[0]
+            const pedido = new Pedido(lojista.idLoja, this.id, produto, 
+                                      produto.precoProduto, quantidade)
+            this.carrinho.push(pedido)
+            console.log('Pedido adicionado.')    
+        }
+        
     }
 
     removerItem(pedido) {
