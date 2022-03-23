@@ -77,7 +77,7 @@ class Cliente extends Pessoa {
         this.carrinho = []
     }
 
-    static cancelarPedido(pedido) {
+    cancelarPedido(pedido) {
         let indexPedido = this.getIndexPedido(pedido, this.pedidosRealizados)        
         if (Number.isSafeInteger(indexPedido)) {
             if (this.entregador === undefined) {

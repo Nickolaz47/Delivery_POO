@@ -7,7 +7,6 @@ const Cliente = require('./cliente');
 const Pedido = require('./pedido');
 const ItensCardapio = require('./itensCardapio');
 const PedidoInformado = require('./index');
-const pedido = require('./index');
 
 //const Cliente = importCliente.Cliente;
 //const Pedido = importCliente.Pedido;
@@ -43,14 +42,23 @@ class Lojista extends Pessoa {
     alterarItemCardapio(itemAlterado,novoProduto,novoPreco) {
         this.cardapio[this.cardapio.indexOf(itemAlterado)] = new ItensCardapio(novoProduto,novoPreco)
     }
-    cancelarPedidoEmAndamento(idPedido) {
-        if(pedido.idLoja === this.idLoja) {
-            Cliente.cancelarPedido(idPedido)
+    cancelarPedidoEmAndamento(cliente, idPedido) {
+        let pedidosCliente = cliente.pedidosRealizados
+        for (let i = 0; i < pedidosCliente.length; i++){
+            if (pedidosCliente[i].id == idPedido){
+                cliente.cancelarPedido(pedidosCliente[i])
+                console.log("Pedido cancelado com sucesso")
+            }else{
+                console.log("Pedido não associado")
+            }
+        }
+    /*   if(pedido.idLoja === this.idLoja) {
+            cliente.cancelarPedido(idPedido)
             console.log("Pedido cancelado com sucesso")
         }else {
             console.log("Pedido não associado")
         }
-        
+         */
         // console.log("Teste de cancelamento")
         // console.log(Pedido.idLoja)
         // if(Pedido.idLoja === this.idLoja) {
@@ -104,6 +112,7 @@ module.exports = Lojista
 //     }
 // }
 
-
+/* 
 console.log(pedido)
 console.log(pedido.idLoja)
+ */
