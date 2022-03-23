@@ -49,10 +49,10 @@ class Cliente extends Pessoa {
         } else {
             const produto = lojista.cardapio.map(item => {
                 if (item.idProdCardapio === idProduto) {
-                    return item.produto                
+                    return item               
                 }
             })[0]
-            const pedido = new Pedido(lojista.idLoja, this.id, produto, 
+            const pedido = new Pedido(lojista.idLoja, this.id, produto.produto, 
                                       produto.precoProduto, quantidade)
             this.carrinho.push(pedido)
             console.log('Pedido adicionado.')    
