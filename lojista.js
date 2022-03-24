@@ -82,7 +82,15 @@ class Lojista extends Pessoa {
         //import
         spread.fromJSON(JSON.parse(jsonStr));
             }
+    validaPedidos(pedidos){
+        for(let i = 0; i < pedidos.length;i++){
+            if(pedidos[i].idLoja ==  this.idLoja){
+                this.pedidosConfirmados.push(pedidos[i])
+            }
+        }
+    }
 }
+
 module.exports = Lojista
 
 // Testes

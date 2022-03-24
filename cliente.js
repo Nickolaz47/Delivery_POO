@@ -88,7 +88,7 @@ class Cliente extends Pessoa {
             return objeto            
         })
         this.carrinho = []
-        lojista.pedidosConfirmados.push(this.pedidosRealizados)
+        lojista.validaPedidos(this.pedidosRealizados)
     }
 
     cancelarPedido(pedido) {
