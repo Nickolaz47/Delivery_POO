@@ -93,9 +93,10 @@ class Lojista extends Pessoa {
     }
 
     validaPedidos(pedidos){
-        for(let i = 0; i < pedidos.length;i++){
-            if(pedidos[i].idLoja ==  this.idLoja){
-                this.pedidosEmEspera.push(pedidos[i])
+        for(let pedido of pedidos){
+            if(pedido.idLoja === this.idLoja){
+                pedido.pedidoConfirmado = true
+                this.pedidosConfirmados.push(pedido)
             }
         }
     }
