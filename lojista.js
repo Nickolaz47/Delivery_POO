@@ -22,6 +22,8 @@ class Lojista extends Pessoa {
         this.#senha = senha
         this.cardapio = []
         this.pedidosConfirmados = []
+        this.pedidosEmEspera = []
+        this.pedidosFinalizados = []
     }
 
     set senha(senha) {
@@ -46,8 +48,10 @@ class Lojista extends Pessoa {
     cancelarPedidoEmAndamento(cliente,idPedido) {
         for (let i = 0; i < this.pedidosConfirmados.length; i++){
             if (this.pedidosConfirmados[i].id == idPedido){
-                cliente.cancelarPedido(pedidosConfirmados[i])
+                cliente.cancelarPedido(this.pedidosConfirmados[i])
                 console.log("Pedido cancelado com sucesso")
+                this.pedidosConfirmados.splice(i, 1)
+                break
             }else{
                 console.log("Pedido não associado")
             }
@@ -68,26 +72,40 @@ class Lojista extends Pessoa {
         // }
     }
 
-    confirmarPedido(idPedido) {
-        if(pedido.idLoja === this.idLoja) {
+    confirmarPedido(cliente, idPedido) {
+        const pedido = this.pedidosEmEspera.find(item=>item.id === idPedido)
+        if(pedido !== undefined){
+            let indexPedido = this.pedidosEmEspera.indexOf(pedido) 
+            let IndexPedidoCliente = cliente.pedidosRealizados.indexOf(pedido)
+            this.pedidosEmEspera.splice(indexPedido, 1)
+            pedido.pedidoConfirmado = true
+            this.pedidosConfirmados.push(pedido)
+            cliente.pedidosRealizados[IndexPedidoCliente].pedidoConfirmado = true
+            console.log('Pedido confirmado!')
+        }else{
+            console.log('Pedido não encontrado.')
+        }
+        /* if(pedido.idLoja === this.idLoja) {
             if(pedido.id === idPedido) {
                 pedido.pedidoConfirmado = true
             }
-        } 
+        }  */
     }
-    atualizaCardapio(){ //Atualizar aqui <---------------------
-        jsonStr = ""
-        //export
-        jsonStr = JSON.stringify(spread.toJSON());
-        //import
-        spread.fromJSON(JSON.parse(jsonStr));
-            }
+
     validaPedidos(pedidos){
         for(let i = 0; i < pedidos.length;i++){
             if(pedidos[i].idLoja ==  this.idLoja){
-                this.pedidosConfirmados.push(pedidos[i])
+                this.pedidosEmEspera.push(pedidos[i])
             }
         }
+    }
+
+    finalizarPedido(cliente){
+        cliente.pedidosRealizados.forEach(item => { 
+            if(item.idLoja === this.idLoja && item.pedidoFinalizado){
+                const pedido = this.pedidosConfirmados.find(item=>item.pedidoFinalizado === true)
+            }
+        });
     }
 }
 
