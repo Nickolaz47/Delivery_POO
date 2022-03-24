@@ -82,12 +82,13 @@ class Cliente extends Pessoa {
         }
     }
 
-    realizarPedido() {
+    realizarPedido(lojista) {
         this.pedidosRealizados = this.carrinho.map(objeto => {
             objeto.pedidoRealizado = true
             return objeto            
         })
         this.carrinho = []
+        lojista.pedidosConfirmados.push(this.pedidosRealizados)
     }
 
     cancelarPedido(pedido) {

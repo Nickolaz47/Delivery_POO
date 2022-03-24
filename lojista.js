@@ -44,7 +44,6 @@ class Lojista extends Pessoa {
         this.cardapio[this.cardapio.indexOf(itemAlterado)] = new ItensCardapio(novoProduto,novoPreco)
     }
     cancelarPedidoEmAndamento(cliente,idPedido) {
-        let pedidosCliente = cliente.pedidosRealizados
         for (let i = 0; i < this.pedidosConfirmados.length; i++){
             if (this.pedidosConfirmados[i].id == idPedido){
                 cliente.cancelarPedido(pedidosConfirmados[i])
