@@ -21,6 +21,7 @@ class Lojista extends Pessoa {
         this.idLoja = idLoja
         this.#senha = senha
         this.cardapio = []
+        this.pedidosConfirmados = []
     }
 
     set senha(senha) {
@@ -42,11 +43,11 @@ class Lojista extends Pessoa {
     alterarItemCardapio(itemAlterado,novoProduto,novoPreco) {
         this.cardapio[this.cardapio.indexOf(itemAlterado)] = new ItensCardapio(novoProduto,novoPreco)
     }
-    cancelarPedidoEmAndamento(cliente, idPedido) {
+    cancelarPedidoEmAndamento(cliente,idPedido) {
         let pedidosCliente = cliente.pedidosRealizados
-        for (let i = 0; i < pedidosCliente.length; i++){
-            if (pedidosCliente[i].id == idPedido){
-                cliente.cancelarPedido(pedidosCliente[i])
+        for (let i = 0; i < this.pedidosConfirmados.length; i++){
+            if (this.pedidosConfirmados[i].id == idPedido){
+                cliente.cancelarPedido(pedidosConfirmados[i])
                 console.log("Pedido cancelado com sucesso")
             }else{
                 console.log("Pedido não associado")
