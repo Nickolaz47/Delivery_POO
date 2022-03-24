@@ -96,15 +96,18 @@ class Lojista extends Pessoa {
         for(let pedido of pedidos){
             if(pedido.idLoja === this.idLoja){
                 pedido.pedidoConfirmado = true
-                this.pedidosConfirmados.push(pedido)
+                this.pedidosEmEspera.push(pedido)
             }
         }
     }
 
-    finalizarPedido(cliente){
+    concluirPedido(cliente){
         cliente.pedidosRealizados.forEach(item => { 
             if(item.idLoja === this.idLoja && item.pedidoFinalizado){
-                const pedido = this.pedidosConfirmados.find(item=>item.pedidoFinalizado === true)
+                const idPedido = item.id
+                const pedido = this.pedidosConfirmados.find(objeto=>objeto.id === idPedido)
+                this.pedidosConfirmados.splice(this.pedidosConfirmados.indexOf(pedido),1)
+                this.pedidosFinalizados.push(item)
             }
         });
     }
