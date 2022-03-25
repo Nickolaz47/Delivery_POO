@@ -4,7 +4,6 @@ const Pedido = require('./pedido');
 const Lojista = require('./lojista');
 const ItensCardapio = require('./itensCardapio');
 
-
 const lojista1 = new Lojista("João","2003-02-13","12345678910","joaozinho@gmail.com",1,"1234")
 const cliente1 = new Cliente("João","2003-02-13","12345678910","joaozinho@gmail.com","1234")
 //const pedido1 = new Pedido(1, 1, 'big mac', 8, 2)
@@ -32,6 +31,8 @@ console.log("================ Lojista ================")
 lojista1.confirmarPedido(cliente1,1)
 lojista1.confirmarPedido(cliente1,2)
 //lojista1.cancelarPedidoEmAndamento(cliente1, 2)
+cliente1.finalizarPedido(1)
+lojista1.concluirPedido(cliente1)
 console.log(lojista1)
 console.log(cliente1)
 
