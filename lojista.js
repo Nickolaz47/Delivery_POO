@@ -1,4 +1,5 @@
 const Pessoa = require('./pessoa');
+const ItensCardapio = require('./itensCardapio');
 
 class Lojista extends Pessoa {
     #senha
@@ -16,9 +17,9 @@ class Lojista extends Pessoa {
         this.#senha = senha
     }
 
-    
     addItemCardapio(item) {
         this.cardapio.push(item)
+        console.log("[INFO]: Item adicionado ao cardápio.")
     }
 
     removerItemCardapio(item) {
@@ -26,10 +27,12 @@ class Lojista extends Pessoa {
             return console.log("Item não está no cardápio")
         }
         this.cardapio.splice(this.cardapio.indexOf(item),1)
+        console.log("[INFO]: Um item foi removido do cardápio.")
     }
 
     alterarItemCardapio(itemAlterado,novoProduto,novoPreco) {
         this.cardapio[this.cardapio.indexOf(itemAlterado)] = new ItensCardapio(novoProduto,novoPreco)
+        console.log("[INFO]: Um item foi alterado no cardápio.")
     }
     cancelarPedidoEmAndamento(cliente,idPedido) {
         for (let i = 0; i < this.pedidosConfirmados.length; i++){

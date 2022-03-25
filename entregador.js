@@ -18,7 +18,8 @@ class Entregador extends Pessoa{
     }
 
     visualizarPedidos(lojista) {
-            console.log(lojista.pedidosConfirmados)
+        console.log("Pedidos confirmados de " + lojista.nome)    
+        console.log(lojista.pedidosConfirmados)
     }
 
     associarPedido(lojista,id){
@@ -28,9 +29,6 @@ class Entregador extends Pessoa{
             }
         });
     }
-
-
-
 }
 
     module.exports = Entregador

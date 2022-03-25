@@ -53,7 +53,6 @@ class Pessoa {
     imprimirDados() {
         console.log(`ID: ${this.#id}\nNome: ${this.#nome}\nDataNasc: ${this.#dataNasc}\nCPF: ${this.#cpf}\nEmail: ${this.#email}`)
     }
-
 }
 
 module.exports = Pessoa
