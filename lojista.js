@@ -1,4 +1,18 @@
+// O lojista poderá manipular o cardápio (adicionar, remover, alterar os pratos). 
+// Poderá, também, cancelar um pedido que esteja em andamento, ao qual esteja associado;
+// Ao finalizar um pedido, o lojista terá a sua lista de pedidos atualizada com este
+
 const Pessoa = require('./pessoa');
+const Cliente = require('./cliente');
+const Pedido = require('./pedido');
+const ItensCardapio = require('./itensCardapio');
+const PedidoInformado = require('./index');
+
+//const Cliente = importCliente.Cliente;
+//const Pedido = importCliente.Pedido;
+
+console.log(Pedido)
+
 
 class Lojista extends Pessoa {
     #senha
@@ -8,8 +22,6 @@ class Lojista extends Pessoa {
         this.#senha = senha
         this.cardapio = []
         this.pedidosConfirmados = []
-        this.pedidosEmEspera = []
-        this.pedidosFinalizados = []
     }
 
     set senha(senha) {
@@ -34,50 +46,82 @@ class Lojista extends Pessoa {
     cancelarPedidoEmAndamento(cliente,idPedido) {
         for (let i = 0; i < this.pedidosConfirmados.length; i++){
             if (this.pedidosConfirmados[i].id == idPedido){
-                cliente.cancelarPedido(this.pedidosConfirmados[i])
+                cliente.cancelarPedido(pedidosConfirmados[i])
                 console.log("Pedido cancelado com sucesso")
-                this.pedidosConfirmados.splice(i, 1)
-                break
             }else{
                 console.log("Pedido não associado")
             }
         }
-    }
-
-    confirmarPedido(cliente, idPedido) {
-        const pedido = this.pedidosEmEspera.find(item=>item.id === idPedido)
-        if(pedido !== undefined){
-            let indexPedido = this.pedidosEmEspera.indexOf(pedido) 
-            let IndexPedidoCliente = cliente.pedidosRealizados.indexOf(pedido)
-            this.pedidosEmEspera.splice(indexPedido, 1)
-            pedido.pedidoConfirmado = true
-            this.pedidosConfirmados.push(pedido)
-            cliente.pedidosRealizados[IndexPedidoCliente].pedidoConfirmado = true
-            console.log('Pedido confirmado!')
-        }else{
-            console.log('Pedido não encontrado.')
+    /*   if(pedido.idLoja === this.idLoja) {
+            cliente.cancelarPedido(idPedido)
+            console.log("Pedido cancelado com sucesso")
+        }else {
+            console.log("Pedido não associado")
         }
+         */
+        // console.log("Teste de cancelamento")
+        // console.log(Pedido.idLoja)
+        // if(Pedido.idLoja === this.idLoja) {
+        //     if(Pedido.pedidoRealizado === true && Pedido.pedidoFinalizado === true) {
+        //         Pedido.pedidoFinalizado === false
+        //     }
+        // }
     }
 
+    confirmarPedido(idPedido) {
+        if(pedido.idLoja === this.idLoja) {
+            if(pedido.id === idPedido) {
+                pedido.pedidoConfirmado = true
+            }
+        } 
+    }
+    atualizaCardapio(){ //Atualizar aqui <---------------------
+        jsonStr = ""
+        //export
+        jsonStr = JSON.stringify(spread.toJSON());
+        //import
+        spread.fromJSON(JSON.parse(jsonStr));
+            }
     validaPedidos(pedidos){
         for(let pedido of pedidos){
             if(pedido.idLoja === this.idLoja){
                 pedido.pedidoConfirmado = true
-                this.pedidosEmEspera.push(pedido)
+                this.pedidosConfirmados.push(pedido)
             }
         }
-    }
-
-    concluirPedido(cliente){
-        cliente.pedidosRealizados.forEach(item => { 
-            if(item.idLoja === this.idLoja && item.pedidoFinalizado){
-                const idPedido = item.id
-                const pedido = this.pedidosConfirmados.find(objeto=>objeto.id === idPedido)
-                this.pedidosConfirmados.splice(this.pedidosConfirmados.indexOf(pedido),1)
-                this.pedidosFinalizados.push(item)
-            }
-        });
     }
 }
 
 module.exports = Lojista
+
+// Testes
+// const lojista = new Lojista("João","2003-02-13","12345678910","joaozinho@gmail.com",1,"1234");
+// const cliente = new Cliente('João', '2000-12-09', '12345678900', 'jao@mail.com', '123456');
+// const pedido = new Pedido(1, 1, 'big mac', 8, 2)
+// cliente.addItem(pedido)
+// cliente.realizarPedido()
+// cliente.finalizarPedido(1)
+
+// const item1 = new ItensCardapio("Pão",10)
+// const item2 = new ItensCardapio("Bife",20)
+// lojista.addItemCardapio(item1)
+// lojista.addItemCardapio(item2)
+// lojista.removerItemCardapio(item2)
+// lojista.cancelarPedidoEmAndamento()
+// console.log(cliente)
+
+// console.log(lojista)
+//console.log(cliente)
+
+
+// class Cardapio extends Pedido {
+//     constructor(idLoja,idCliente) {
+//         super(idLoja,idCliente)
+//         this.cardapio = cardapio
+//     }
+// }
+
+/* 
+console.log(pedido)
+console.log(pedido.idLoja)
+ */
