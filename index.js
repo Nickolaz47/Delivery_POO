@@ -6,7 +6,7 @@ const Entregador = require('./entregador');
 
 // Instanciando as pessoas
 const lojista1 = new Lojista("José","1973-12-03","12345678910","zezinho@gmail.com",1,"1234")
-const cliente1 = new Cliente("João","2003-02-13","12345678910","joaozinho@gmail.com","1234")
+const cliente1 = new Cliente("João","2003-02-13","12345678910","joaozinho@gmail.com","1234", 'Rua Amaral Peixoto 10')
 const entregador1 = new Entregador("Batista","1985-08-02","01236578932",'batista@email.com','@senha')
 
 // Instanciando o cardápio

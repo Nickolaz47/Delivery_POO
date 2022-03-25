@@ -3,11 +3,21 @@ const Pedido = require('./pedido')
 
 
 class Cliente extends Pessoa {
+    #endereco
     #senha
-    constructor(nome, dataNasc, cpf, email, senha) {
+    constructor(nome, dataNasc, cpf, email, senha, endereco) {
         super(nome, dataNasc, cpf, email)        
         this.#senha = senha
+        this.#endereco = endereco
         this.carrinho = []
+    }
+
+    get endereco() {
+        return this.#endereco
+    }
+
+    set endereco(endereco) {
+        this.#endereco = endereco
     }
 
     set senha(senha) {
@@ -16,7 +26,7 @@ class Cliente extends Pessoa {
 
     imprimirDados() {
         super.imprimirDados()
-        console.log(`Senha: ${this.#senha}`)
+        console.log(`Senha: ${this.#senha}\nEndereco: ${this.#endereco}`)
     }
 
     getIndexPedido(idPedido, array) {   
@@ -38,7 +48,7 @@ class Cliente extends Pessoa {
         } else {
             const produto = lojista.cardapio.find(item => item.idProdCardapio === idProduto)
             if (produto !== undefined) {
-                const pedido = new Pedido(lojista.idLoja, this.id, produto.produto, 
+                const pedido = new Pedido(lojista.idLoja, this.id, this.endereco, produto.produto, 
                     produto.precoProduto, quantidade)
                     this.carrinho.push(pedido)
                     console.log('Pedido adicionado.')  

@@ -1,9 +1,10 @@
 class Pedido {
     static counter = 1
-    constructor(idLoja, idCliente, produto, precoProduto, quantidade) {
+    constructor(idLoja, idCliente, enderecoCliente, produto, precoProduto, quantidade) {
         this.id = Pedido.counter
         this.idLoja = idLoja
         this.idCliente = idCliente
+        this.enderecoCliente = enderecoCliente
         this.produto = produto
         this.precoProduto = precoProduto
         this.quantidade = quantidade
