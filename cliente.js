@@ -49,7 +49,8 @@ class Cliente extends Pessoa {
         
     }
 
-    removerItem(pedido) {
+    removerItem(idPedido) {
+        const pedido = this.pedidosRealizados.find(item=>item.id === idPedido)
         let indexPedido = this.getIndexPedido(pedido, this.carrinho)                
         if (Number.isSafeInteger(indexPedido) && indexPedido !== -1) {
             this.carrinho.splice(indexPedido, 1)
@@ -94,7 +95,8 @@ class Cliente extends Pessoa {
         }
     }
 
-    finalizarPedido(pedido) {
+    finalizarPedido(idPedido) {
+        const pedido = this.pedidosRealizados.find(item=>item.id === idPedido)
         let indexPedido = this.getIndexPedido(pedido, this.pedidosRealizados)        
         if (Number.isSafeInteger(indexPedido)) {
             let objeto = this.pedidosRealizados[indexPedido]
@@ -106,12 +108,4 @@ class Cliente extends Pessoa {
     }
 }
 
-module.exports = Cliente  
-
-// Testes
-// const cliente = new Cliente('João', '2000-12-09', '12345678900', 'jao@mail.com', '123456')
-// const pedido = new Pedido(1, 1, 'big mac', 8, 2)
-// cliente.addItem(pedido)
-// cliente.realizarPedido()
-// cliente.finalizarPedido(1)
-// console.log(cliente)
+module.exports = Cliente
