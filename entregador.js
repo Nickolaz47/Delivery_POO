@@ -1,3 +1,4 @@
+const Pedido = require('./pedido')
 const Pessoa = require('./pessoa')
 
 class Entregador extends Pessoa{
@@ -16,7 +17,20 @@ class Entregador extends Pessoa{
         console.log(`Senha: ${this.#senha}`)
     }
 
-    visualizarPedidos() {}
-    
-    aceitarPedido() {}
+    visualizarPedidos(lojista) {
+            console.log(lojista.pedidosConfirmados)
+    }
+
+    associarPedido(lojista,id){
+        lojista.pedidosConfirmados.forEach(element => {
+            if(element.id===id){
+                element.entregador = this.nome
+            }
+        });
+    }
+
+
+
 }
+
+    module.exports = Entregador
