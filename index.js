@@ -55,8 +55,9 @@ entregador1.visualizarPedidos(lojista1)
 
 console.log("---------------------------")
 console.log(lojista1.pedidosConfirmados)
-entregador1.associarPedido(lojista1,3)
-entregador1.associarPedido(lojista1,1)
+entregador1.associarPedido(lojista1, cliente1, 3)
+console.log(en)
+entregador1.associarPedido(lojista1, cliente1, 1)
 
 
 

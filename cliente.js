@@ -19,24 +19,13 @@ class Cliente extends Pessoa {
         console.log(`Senha: ${this.#senha}`)
     }
 
-    getIndexPedido(pedido, array) {   
-        if (pedido instanceof Pedido) {
-            if (array.includes(pedido)) {
-                return array.indexOf(pedido)
-            } else {
-                return false
-            }
-        } else {
-            if (Number.isSafeInteger(Number.parseInt(pedido))) {
-                return array.map(objeto => {
-                    if (objeto.id === pedido) {                        
-                        return array.indexOf(objeto)
-                    }              
-                })[0]
-            } else {                
-                return false 
-            }
-        }
+    getIndexPedido(idPedido, array) {   
+        if (Number.isSafeInteger(Number.parseInt(idPedido))) {
+            const pedido = array.find(obj => obj.id === idPedido)
+            return array.indexOf(pedido)
+        } else {                
+            return false 
+        }    
     }
 
     cancelarCarrinho() {

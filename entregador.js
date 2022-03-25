@@ -21,9 +21,14 @@ class Entregador extends Pessoa{
             console.log(lojista.pedidosConfirmados)
     }
 
-    associarPedido(lojista,id){
+    associarPedido(lojista, cliente, id){
         lojista.pedidosConfirmados.forEach(element => {
-            if(element.id===id){
+            if(element.id === id){
+                element.entregador = this.nome
+            }
+        })
+        cliente.pedidosRealizados.forEach(element => {
+            if(element.id === id){
                 element.entregador = this.nome
             }
         });
