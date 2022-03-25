@@ -28,7 +28,10 @@ cliente1.realizarPedido(lojista1)
 // console.log(cliente)
 
 console.log("================ Lojista ================")
-//lojista1.cancelarPedidoEmAndamento(cliente1, 1)
+lojista1.confirmarPedido(cliente1,1)
+lojista1.confirmarPedido(cliente1,2)
+//lojista1.cancelarPedidoEmAndamento(cliente1, 2)
+console.log(lojista1)
 console.log(cliente1)
 
 // lojista.addItemCardapio(item1)
