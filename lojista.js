@@ -36,13 +36,11 @@ class Lojista extends Pessoa {
     }
     cancelarPedidoEmAndamento(cliente,idPedido) {
         for (let i = 0; i < this.pedidosConfirmados.length; i++){
-            if (this.pedidosConfirmados[i].id == idPedido){
-                cliente.cancelarPedido(this.pedidosConfirmados[i])
+            if (this.pedidosConfirmados[i].id === idPedido){
+                cliente.cancelarPedido(idPedido)
                 console.log("Pedido cancelado com sucesso")
                 this.pedidosConfirmados.splice(i, 1)
                 break
-            }else{
-                console.log("Pedido não associado")
             }
         }
     }
@@ -62,10 +60,9 @@ class Lojista extends Pessoa {
         }
     }
 
-    validaPedidos(pedidos){
-        for(let pedido of pedidos){
-            if(pedido.idLoja === this.idLoja){
-                pedido.pedidoConfirmado = true
+    recebePedidos(cliente){
+        for(let pedido of cliente.pedidosRealizados){
+            if(pedido.idLoja === this.idLoja){                
                 this.pedidosEmEspera.push(pedido)
             }
         }
@@ -78,6 +75,7 @@ class Lojista extends Pessoa {
                 const pedido = this.pedidosConfirmados.find(objeto=>objeto.id === idPedido)
                 this.pedidosConfirmados.splice(this.pedidosConfirmados.indexOf(pedido),1)
                 this.pedidosFinalizados.push(item)
+                console.log("Pedido concluído.")
             }
         });
     }

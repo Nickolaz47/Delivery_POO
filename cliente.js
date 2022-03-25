@@ -60,8 +60,8 @@ class Cliente extends Pessoa {
         }
     }
 
-    alterarQuantItem(pedido, quantidade) {
-        let indexPedido = this.getIndexPedido(pedido, this.carrinho)
+    alterarQuantItem(idPedido, quantidade) {
+        let indexPedido = this.getIndexPedido(idPedido, this.carrinho)
         if (Number.isSafeInteger(indexPedido)) {
             let objeto = this.carrinho[indexPedido]
             objeto.quantidade = quantidade
@@ -72,17 +72,16 @@ class Cliente extends Pessoa {
         }
     }
 
-    realizarPedido(lojista) {
+    realizarPedido() {
         this.pedidosRealizados = this.carrinho.map(objeto => {
             objeto.pedidoRealizado = true
             return objeto            
         })
         this.carrinho = []
-        lojista.validaPedidos(this.pedidosRealizados)
     }
 
-    cancelarPedido(pedido) {
-        let indexPedido = this.getIndexPedido(pedido, this.pedidosRealizados)                
+    cancelarPedido(idPedido) {
+        let indexPedido = this.getIndexPedido(idPedido, this.pedidosRealizados)                
         if (Number.isSafeInteger(indexPedido) && indexPedido !== -1) {
             if (this.pedidosRealizados[indexPedido].entregador === undefined) {
                 this.pedidosRealizados.splice(indexPedido, 1)
@@ -96,11 +95,9 @@ class Cliente extends Pessoa {
     }
 
     finalizarPedido(idPedido) {
-        const pedido = this.pedidosRealizados.find(item=>item.id === idPedido)
-        let indexPedido = this.getIndexPedido(pedido, this.pedidosRealizados)        
-        if (Number.isSafeInteger(indexPedido)) {
-            let objeto = this.pedidosRealizados[indexPedido]
-            objeto.pedidoFinalizado = true
+        const pedido = this.pedidosRealizados.find(item=>item.id === idPedido)                
+        if (pedido !== undefined) {
+            pedido.pedidoFinalizado = true
             console.log('Pedido finalizado.')
         } else {
             console.log('Pedido não encontrado!')
