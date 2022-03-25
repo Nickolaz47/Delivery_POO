@@ -51,8 +51,8 @@ class Cliente extends Pessoa {
 
     removerItem(pedido) {
         let indexPedido = this.getIndexPedido(pedido, this.carrinho)                
-        if (Number.isSafeInteger(indexPedido)) {
-            this.carrinho.splice(this.carrinho.indexOf(pedido), 1)
+        if (Number.isSafeInteger(indexPedido) && indexPedido !== -1) {
+            this.carrinho.splice(indexPedido, 1)
             console.log('Pedido removido.')            
         } else {
             console.log('Pedido não encontrado!')
@@ -81,10 +81,10 @@ class Cliente extends Pessoa {
     }
 
     cancelarPedido(pedido) {
-        let indexPedido = this.getIndexPedido(pedido, this.pedidosRealizados)        
-        if (Number.isSafeInteger(indexPedido)) {
-            if (this.entregador === undefined) {
-                this.pedidosRealizados.splice(this.pedidosRealizados.indexOf(pedido), 1)
+        let indexPedido = this.getIndexPedido(pedido, this.pedidosRealizados)                
+        if (Number.isSafeInteger(indexPedido) && indexPedido !== -1) {
+            if (this.pedidosRealizados[indexPedido].entregador === undefined) {
+                this.pedidosRealizados.splice(indexPedido, 1)
                 console.log('Pedido cancelado.')
             } else {
                 console.log('Pedido não pode ser cancelado pois há um entregador associado.')
